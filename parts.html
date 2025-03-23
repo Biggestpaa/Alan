@@ -114,6 +114,45 @@
       });
     }
     
+
+    function filterItems() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const items = document.querySelectorAll(".item");
+      const subSections = document.querySelectorAll(".sub-content");
+      const subButtons = document.querySelectorAll(".sub-collapsible");
+      const catSections = document.querySelectorAll(".content");
+      const catButtons = document.querySelectorAll(".collapsible");
+
+      // Hide everything first
+      items.forEach(item => item.style.display = "none");
+      subSections.forEach(sub => sub.style.display = "none");
+      catSections.forEach(cat => cat.style.display = "none");
+
+      // Reset buttons
+      subButtons.forEach(btn => btn.classList.remove("active"));
+      catButtons.forEach(btn => btn.classList.remove("active"));
+
+      // Filter and show matching parts and open their parents
+      items.forEach(item => {
+        if (item.textContent.toLowerCase().includes(query)) {
+          item.style.display = "block";
+          let subContent = item.closest(".sub-content");
+          if (subContent) {
+            subContent.style.display = "block";
+            let subBtn = subContent.previousElementSibling;
+            if (subBtn) subBtn.classList.add("active");
+
+            let catContent = subContent.closest(".content");
+            if (catContent) {
+              catContent.style.display = "block";
+              let catBtn = catContent.previousElementSibling;
+              if (catBtn) catBtn.classList.add("active");
+            }
+          }
+        }
+      });
+    }
+    
 </script>
 </body>
 </html>
