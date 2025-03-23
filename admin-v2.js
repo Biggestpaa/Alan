@@ -18,7 +18,10 @@ function loadAdminPage() {
 
 function addPart() {
   const parts = JSON.parse(localStorage.getItem("parts") || "[]");
-  parts.push({
+  const partImage = document.getElementById('partImage').files[0];
+  const reader = new FileReader();
+  reader.onload = () => {
+    parts.push({
     name: document.getElementById("partName").value,
     partNumber: document.getElementById("partNumber").value,
     price: document.getElementById("partPrice").value,
@@ -28,13 +31,19 @@ function addPart() {
     category: document.getElementById("partCategory").value,
     subcategory: document.getElementById("partSubcategory").value
   });
-  localStorage.setItem("parts", JSON.stringify(parts));
+      localStorage.setItem("parts", JSON.stringify(parts));
+    displayParts();
+  };
+  if (partImage) reader.readAsDataURL(partImage); else reader.onload();
   displayParts();
 }
 
 function addAccessory() {
   const accs = JSON.parse(localStorage.getItem("accessories") || "[]");
-  accs.push({
+  const accImage = document.getElementById('accImage').files[0];
+  const reader2 = new FileReader();
+  reader2.onload = () => {
+    accs.push({
     name: document.getElementById("accName").value,
     partNumber: document.getElementById("accNumber").value,
     price: document.getElementById("accPrice").value,
@@ -44,7 +53,10 @@ function addAccessory() {
     category: document.getElementById("accCategory").value,
     subcategory: document.getElementById("accSubcategory").value
   });
-  localStorage.setItem("accessories", JSON.stringify(accs));
+      localStorage.setItem("accessories", JSON.stringify(accs));
+    displayAccessories();
+  };
+  if (accImage) reader2.readAsDataURL(accImage); else reader2.onload();
   displayAccessories();
 }
 

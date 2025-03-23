@@ -93,7 +93,10 @@
           grouped[category][sub].forEach(part => {
             const item = document.createElement("div");
             item.className = "item";
-            item.textContent = `${part.name} - ${part.partNumber} - €${part.price} (${part.make} ${part.model})`;
+            
+        const img = part.image ? `<img src="${part.image}" alt="${part.name}" style='max-width:100px; display:block; margin-bottom:5px;'/>` : '';
+        item.innerHTML =
+         `${part.name} - ${part.partNumber} - €${part.price} (${part.make} ${part.model})`;
             subContent.appendChild(item);
           });
 
