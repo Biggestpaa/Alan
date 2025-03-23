@@ -42,6 +42,10 @@
   </header>
   <main class="main">
     <h2>Parts Catalogue</h2>
+    <div style="margin-bottom: 20px;">
+      <input type="text" id="searchInput" placeholder="Search parts by name, number, make, or model" style="width: 100%; padding: 10px; font-size: 16px;" oninput="filterItems()" />
+    </div>
+    
     <div id="partsContainer"></div>
   </main>
 
@@ -101,6 +105,15 @@
         container.appendChild(catContent);
       }
     }
-  </script>
+  
+    function filterItems() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const items = document.querySelectorAll(".item");
+      items.forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(query) ? "block" : "none";
+      });
+    }
+    
+</script>
 </body>
 </html>
