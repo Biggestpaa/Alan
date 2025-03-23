@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accessories</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <img id="banner" class="banner" src="banner.jpg" alt="Banner" />
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="accessories.html">Accessories</a>
+      <a href="accessories.html" id="accessories-link">Accessories</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    <h2 id="accessories-heading">Accessories</h2>
+    <h4 id="accessories-subheading">All available accessories</h4>
+    <div id="itemsContainer" class="item-list"></div>
+  </main>
+
+  <script>
+    function loadPage() {
+      const params = new URLSearchParams(window.location.search);
+      const make = (params.get("make") || "").toLowerCase();
+      const model = (params.get("model") || "").toLowerCase();
+
+      const banner = localStorage.getItem("bannerImage");
+      if (banner) {
+        document.getElementById("banner").src = banner;
+      }
+
+      const accessories = JSON.parse(localStorage.getItem("accessories") || "[]");
+      const container = document.getElementById("itemsContainer");
+
+      container.innerHTML = accessories.map(part => {
+        const match = (!make && !model) ||
+                      (part.make?.toLowerCase() === make && part.model?.toLowerCase() === model);
+        if (match) {
+          return `<div class="item" data-name="\${part.name}" data-number="\${part.partNumber}" data-make="\${part.make}" data-model="\${part.model}">
+                    <strong>\${part.name}</strong> - \${part.partNumber} (\${part.make} \${part.model}) - €\${part.price}
+                  </div>`;
+        }
+        return "";
+      }).join("");
+    }
+
+    window.onload = function () {
+      loadPage();
+    };
+  </script>
+</body>
+</html>
