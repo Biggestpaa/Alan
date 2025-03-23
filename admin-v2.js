@@ -63,11 +63,26 @@ function addAccessory() {
 function displayParts() {
   const container = document.getElementById("partsManager");
   const parts = JSON.parse(localStorage.getItem("parts") || "[]");
-  container.innerHTML = parts.map(p => `<div class='item'>${p.name} - ${p.partNumber} - €${p.price}</div>`).join("");
+  container.innerHTML = parts.map((p, i) => `<div class='item'>${p.name} - ${p.partNumber} - €${p.price}</div>`)+ `<button onclick='deletePart(i)' style='float:right; background:red; color:white;'>Delete</button>`</div>`)+ `<button onclick='deleteAccessory(i)' style='float:right; background:red; color:white;'>Delete</button>`</div>`).join("");
 }
 
 function displayAccessories() {
   const container = document.getElementById("accessoriesManager");
   const accs = JSON.parse(localStorage.getItem("accessories") || "[]");
-  container.innerHTML = accs.map(a => `<div class='item'>${a.name} - ${a.partNumber} - €${a.price}</div>`).join("");
+  container.innerHTML = accs.map((a, i) => `<div class='item'>${a.name} - ${a.partNumber} - €${a.price}</div>`)+ `<button onclick='deletePart(i)' style='float:right; background:red; color:white;'>Delete</button>`</div>`)+ `<button onclick='deleteAccessory(i)' style='float:right; background:red; color:white;'>Delete</button>`</div>`).join("");
+}
+
+
+function deletePart(index) {
+  const parts = JSON.parse(localStorage.getItem("parts") || "[]");
+  parts.splice(index, 1);
+  localStorage.setItem("parts", JSON.stringify(parts));
+  displayParts();
+}
+
+function deleteAccessory(index) {
+  const accs = JSON.parse(localStorage.getItem("accessories") || "[]");
+  accs.splice(index, 1);
+  localStorage.setItem("accessories", JSON.stringify(accs));
+  displayAccessories();
 }
